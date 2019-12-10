@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+    <title>订单提交</title>
+     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+</head>
+<body>
+<div class="weui-form">
+    <div class="weui-form__text-area">
+      <h2 class="weui-form__title">表单结构</h2>
+      <div class="weui-form__desc">展示表单页面的信息结构样式, 分别由头部区域/控件区域/提示区域/操作区域和底部信息区域组成。</div>
+    </div>
+    <div class="weui-form__control-area">
+      <div class="weui-cells__group weui-cells__group_form">
+        <div class="weui-cells__title">表单组标题</div>
+        <div class="weui-cells weui-cells_form">
+          <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">微信号</label></div>
+            <div class="weui-cell__bd">
+                <input id="js_input" class="weui-input" placeholder="填写本人微信号">
+            </div>
+          </div>
+          <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
+            <div class="weui-cell__bd">
+                <input id="js_input" class="weui-input" placeholder="填写本人微信号的昵称">
+            </div>
+          </div>
+          <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
+            <div class="weui-cell__bd">
+                <input id="js_input" class="weui-input" placeholder="填写绑定的电话号码" type="number" pattern="[0-9]*">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="weui-form__tips-area">
+      <p class="weui-form__tips">
+        表单页提示，居中对齐
+      </p>
+    </div>
+    <div class="weui-form__opr-area">
+      <a class="weui-btn weui-btn_primary weui-btn_disabled" href="javascript:" id="showTooltips">确定</a>
+    </div>
+    <div class="weui-form__tips-area">
+      <p class="weui-form__tips">
+        表单页提示，居中对齐
+      </p>
+    </div>
+    <div class="weui-form__extra-area">
+      <div class="weui-footer">
+        <p class="weui-footer__links">
+          <a href="javascript:void(0);" class="weui-footer__link">底部链接文本</a>
+        </p>
+        <p class="weui-footer__text">Copyright © 2008-2019 weui.io</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    {#alert(location.href.split('#')[0]) //返回当前url#}
+    wx.config({
+  debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+  appId: '{{appId}}', // 必填，公众号的唯一标识
+  timestamp: '{{ timestamp }}', // 必填，生成签名的时间戳
+  nonceStr: '{{noncestr}}', // 必填，生成签名的随机串
+  signature: '{{signature}}',// 必填，签名
+  jsApiList: ['scanQRCode','updateTimelineShareData','updateAppMessageShareData',"chooseImage", "uploadImage", "downloadImage", "previewImage"] // 必填，需要使用的JS接口列表
+});
+    wx.ready(function(){
+wx.checkJsApi({
+            jsApiList: [
+                'chooseImage',
+                'previewImage',
+                'uploadImage',
+                'downloadImage'
+            ],success: function (res) {
+                //alert(JSON.stringify(res));
+                if (res.checkResult.getLocation == false) {
+                    alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+                    return;
+                } else {
+                    $("#uploaderInput").click(function () {
+                        wxChooseImage();
+                    })
+                }
+            },
+            error: function (res) {
+                alert(JSON.stringify("error=" + res));
+            }
+        });
+    });
+</script>
