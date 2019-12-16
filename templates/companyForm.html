@@ -4,25 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
     <title>订单提交</title>
-     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
 </head>
 <body>
 
 <div class="weui-form__control-area">
-      <div class="weui-cells__group weui-cells__group_form">
+    <div class="weui-cells__group weui-cells__group_form">
         <div class="weui-cells weui-cells_form">
-          <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">公司名称</label></div>
-            <div class="weui-cell__bd">
-                <input id="js_input" class="weui-input" placeholder="填写公司名称">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">公司名称</label></div>
+                <div class="weui-cell__bd">
+                    <input id="js_input" class="weui-input" placeholder="填写公司名称">
+                </div>
             </div>
-          </div>
 
 
-
-<div class="weui-cell">
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <div class="weui-uploader">
                         <div class="weui-uploader__hd">
@@ -34,14 +33,15 @@
 
                             </ul>
                             <div class="weui-uploader__input-box">
-                                <input id="uploaderInput_zufang" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                <input id="uploaderInput_zufang" class="weui-uploader__input" type="file"
+                                       accept="image/*" multiple="">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-<div class="weui-cell">
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <div class="weui-uploader">
                         <div class="weui-uploader__hd">
@@ -53,43 +53,51 @@
 
                             </ul>
                             <div class="weui-uploader__input-box">
-                                <input id="uploaderInput_chanquan" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                <input id="uploaderInput_chanquan" class="weui-uploader__input" type="file"
+                                       accept="image/*" multiple="">
                             </div>
                         </div>
                     </div>
                 </div>
-</div>
-
-<table>
-    <thead>
-    <tr><th>姓名</th><th>职业</th><th>操作</th></tr>
-    </thead>
-    <tbody id="addlist">
-    <tr id="list-1"><td><input name="list[1][num]" placeholder="名字" value="" type="text"></td><td><input name="list[1][title]" placeholder="标题" value="" type="text"></td><td><a class="" href="javascript:;" onclick="dellist(this)">删除行</a></td></tr>
-    </tbody>
-</table>
-
-
-
-<div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">工行网银</label></div>
-            <div class="weui-cell__bd">
-                <input id="js_input" class="weui-input" placeholder="填写绑定工行卡号" type="number" pattern="[0-9]*">
             </div>
-</div>
 
- <button type="submit" class = "weui-btn weui-btn_primary">提交</button>
+            <table>
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>职业</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="addlist">
+                <tr id="list-1">
+                    <td><input name="list[1][num]" placeholder="名字" value="" type="text"></td>
+                    <td><input name="list[1][title]" placeholder="标题" value="" type="text"></td>
+                    <td><a class="" href="javascript:;" onclick="dellist(this)">删除行</a></td>
+                </tr>
+                </tbody>
+            </table>
 
-</div>
-      </div>
+
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">工行网银</label></div>
+                <div class="weui-cell__bd">
+                    <input id="js_input" class="weui-input" placeholder="填写绑定工行卡号" type="number" pattern="[0-9]*">
+                </div>
+            </div>
+
+            <button type="submit" class="weui-btn weui-btn_primary">提交</button>
+
         </div>
+    </div>
+</div>
 
-  <div class="weui-msg__extra-area">
+<div class="weui-msg__extra-area">
     <div class="weui-footer">
-      <p class="weui-footer__links">
-        <a href="javascript:void(0);" class="weui-footer__link">whw</a>
-      </p>
-      <p class="weui-footer__text">Copyright © 2008-2019 weui.io</p>
+        <p class="weui-footer__links">
+            <a href="javascript:void(0);" class="weui-footer__link">whw</a>
+        </p>
+        <p class="weui-footer__text">Copyright © 2008-2019 weui.io</p>
     </div>
 </div>
 </body>
@@ -100,21 +108,21 @@
 <script type="text/javascript">
     {#alert(location.href.split('#')[0]) //返回当前url#}
     wx.config({
-  debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-  appId: '{{appId}}', // 必填，公众号的唯一标识
-  timestamp: '{{ timestamp }}', // 必填，生成签名的时间戳
-  nonceStr: '{{noncestr}}', // 必填，生成签名的随机串
-  signature: '{{signature}}',// 必填，签名
-  jsApiList: ['scanQRCode','updateTimelineShareData','updateAppMessageShareData',"chooseImage", "uploadImage", "downloadImage", "previewImage"] // 必填，需要使用的JS接口列表
-});
-    wx.ready(function(){
-wx.checkJsApi({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '{{appId}}', // 必填，公众号的唯一标识
+        timestamp: '{{ timestamp }}', // 必填，生成签名的时间戳
+        nonceStr: '{{noncestr}}', // 必填，生成签名的随机串
+        signature: '{{signature}}',// 必填，签名
+        jsApiList: ['scanQRCode', 'updateTimelineShareData', 'updateAppMessageShareData', "chooseImage", "uploadImage", "downloadImage", "previewImage"] // 必填，需要使用的JS接口列表
+    });
+    wx.ready(function () {
+        wx.checkJsApi({
             jsApiList: [
                 'chooseImage',
                 'previewImage',
                 'uploadImage',
                 'downloadImage'
-            ],success: function (res) {
+            ], success: function (res) {
                 //alert(JSON.stringify(res));
                 if (res.checkResult.getLocation == false) {
                     alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');

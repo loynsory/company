@@ -1,11 +1,14 @@
 from django.db import models
 
+
 # Create your models here.
 class AccessToken(models.Model):
     token = models.CharField(max_length=512)
     expiredTime = models.CharField(max_length=30)
+
     def __str__(self):
         return self.expiredTime
+
 
 class UserInfo(models.Model):
     openid = models.CharField(max_length=512)
@@ -16,6 +19,7 @@ class UserInfo(models.Model):
     city = models.CharField(max_length=30)
     access_token = models.CharField(max_length=512)
     expiredTime = models.CharField(max_length=30)
+
 
 class CheckInfo(models.Model):
     openid = models.CharField(max_length=512)

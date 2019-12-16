@@ -14,10 +14,12 @@ from . import accessToken
 from .util import sendUrlRequest
 from .util import jssdk
 from django.conf import settings
+
 # Create your views here.
 APPID = 'wx7a905758f3506c32'
 APPSECRET = '09addc892dc350d1182fe8ee6cd3a2c4'
 TOKEN = 'whw'
+
 
 @csrf_exempt
 def wechat_main(request):
@@ -48,46 +50,55 @@ def wechat_main(request):
         othercontent = autoreply(request)
         return HttpResponse(othercontent)
 
-#审核页面
+
+# 审核页面
 def userInfo(request):
-    redirt_uri = 'http://whw.free.idcfengye.com/first/getToken/'#获取网页授权重定向
-    str = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect' % (APPID, redirt_uri)
+    redirt_uri = 'http://whw.free.idcfengye.com/first/getToken/'  # 获取网页授权重定向
+    str = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect' % (
+    APPID, redirt_uri)
     return redirect(str)
     # context = jssdk.getticket("http://whwweixin.free.idcfengye.com/first/userInfo/")
     # print(context)
     # return render(request, 'userInfo.html',context)
 
-#审核查询页面
+
+# 审核查询页面
 def check(request):
     nickname = request.GET.get("nickname")
     print(nickname)
     return render(request, 'success.html')
 
-#图片上传接口
+
+# 图片上传接口
 from .util import upload as up
+
+
 @csrf_exempt
 def upload(request):
     temp = request.POST.get("base64")
     test = request.POST.get("test")
     file = temp.split('base64,')
     image = base64.b64decode(file[1])
-    imagename = '%s.%s' % (int(time.time()),"jpg")
+    imagename = '%s.%s' % (int(time.time()), "jpg")
     key = int(time.time())
-    imagenames = '%s/%s' % (settings.MEDIA_ROOT,imagename)
-    fimg = open(imagenames,"wb")
+    imagenames = '%s/%s' % (settings.MEDIA_ROOT, imagename)
+    fimg = open(imagenames, "wb")
     fimg.write(image)
     fimg.close()
 
-    url = up.upload(imagenames,key)
+    url = up.upload(imagenames, key)
 
     data = {'code': '0', 'result': 'success'}
     data = json.dumps(data, ensure_ascii=False)
     return HttpResponse(data)
 
-#菜单创建
+
+# 菜单创建
 from wechatpy import WeChatClient
+
+
 def defi_menu(request):
-    client = WeChatClient(APPID,APPSECRET,accessToken.send_request())
+    client = WeChatClient(APPID, APPSECRET, accessToken.send_request())
     client.menu.create({
         "button": [
             {
@@ -114,14 +125,18 @@ def defi_menu(request):
     })
     return HttpResponse('创建成功')
 
-#菜单删除
+
+# 菜单删除
 def delete_menu(request):
     client = WeChatClient(APPID, APPSECRET)
     res = client.menu.delete()
     print(res)
     return HttpResponse('删除成功')
 
+
 import xml.etree.ElementTree as ET
+
+
 def autoreply(request):
     try:
         webData = request.body
@@ -172,6 +187,7 @@ def autoreply(request):
     except Exception as Argment:
         return Argment
 
+
 class Msg(object):
     def __init__(self, xmlData):
         self.ToUserName = xmlData.find('ToUserName').text
@@ -180,7 +196,10 @@ class Msg(object):
         self.MsgType = xmlData.find('MsgType').text
         self.MsgId = xmlData.find('MsgId').text
 
+
 import time
+
+
 class TextMsg(Msg):
     def __init__(self, toUserName, fromUserName, content):
         self.__dict = dict()
@@ -200,5 +219,3 @@ class TextMsg(Msg):
         </xml>
         """
         return XmlForm.format(**self.__dict)
-
-
