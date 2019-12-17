@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
-    <title>订单提交</title>
+    <title>公司信息</title>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
@@ -21,20 +21,28 @@
             </div>
 
 
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <div class="weui-uploader">
-                        <div class="weui-uploader__hd">
-                            <p class="weui-uploader__title">租房合同</p>
-                            <div class="weui-uploader__info">0/3</div>
-                        </div>
-                        <div class="weui-uploader__bd">
-                            <ul class="weui-uploader__files" id="uploaderFiles">
-
-                            </ul>
-                            <div class="weui-uploader__input-box">
-                                <input id="uploaderInput_zufang" class="weui-uploader__input" type="file"
-                                       accept="image/*" multiple="">
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <p class="weui-uploader__title">租房合同</p>
+                                <div class="weui-uploader__info"><span id="contract_num">0</span>/3</div>
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <ul class="weui-uploader__files" id="uploaderFiles">
+                                        <div class="weui-uploader__file-content">
+                                            <i class="weui-icon-warn"></i>
+                                        </div>
+                                    </li>
+                                    <li class="weui-uploader__file weui-uploader__file_status">
+                                        <div class="weui-uploader__file-content">50%</div>
+                                    </li>
+                                </ul>
+                                <div class="weui-uploader__input-box">
+                                    <input id="uploaderInput_contract" class="weui-uploader__input" type="file" accept="image/*"
+                                           multiple="">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,40 +110,3 @@
 </div>
 </body>
 </html>
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript">
-    {#alert(location.href.split('#')[0]) //返回当前url#}
-    wx.config({
-        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: '{{appId}}', // 必填，公众号的唯一标识
-        timestamp: '{{ timestamp }}', // 必填，生成签名的时间戳
-        nonceStr: '{{noncestr}}', // 必填，生成签名的随机串
-        signature: '{{signature}}',// 必填，签名
-        jsApiList: ['scanQRCode', 'updateTimelineShareData', 'updateAppMessageShareData', "chooseImage", "uploadImage", "downloadImage", "previewImage"] // 必填，需要使用的JS接口列表
-    });
-    wx.ready(function () {
-        wx.checkJsApi({
-            jsApiList: [
-                'chooseImage',
-                'previewImage',
-                'uploadImage',
-                'downloadImage'
-            ], success: function (res) {
-                //alert(JSON.stringify(res));
-                if (res.checkResult.getLocation == false) {
-                    alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
-                    return;
-                } else {
-                    $("#uploaderInput").click(function () {
-                        wxChooseImage();
-                    })
-                }
-            },
-            error: function (res) {
-                alert(JSON.stringify("error=" + res));
-            }
-        });
-    });
-</script>
